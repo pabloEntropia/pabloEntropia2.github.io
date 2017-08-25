@@ -358,16 +358,16 @@ function shuffleArray(array) {
 }
 
 // jQuery UI based alert() dialog replacement
-$.extend({ alert: function (message, title) {
-  $("<div></div>").dialog( {
-    buttons: { "Close": function () { $(this).dialog("close"); } },
-    close: function (event, ui) { $(this).remove(); },
-    resizable: false,
-    title: title,
-    modal: true
-  }).text(message);
-}
-});
+//$.extend({ alert: function (message, title) {
+ // $("<div></div>").dialog( {
+//    buttons: { "Close": function () { $(this).dialog("close"); } },
+//    close: function (event, ui) { $(this).remove(); },
+//    resizable: false,
+//    title: title,
+//    modal: true
+//  }).text(message);
+//}
+//});
 
 // ###################################################################
 // Listening test main object
@@ -595,7 +595,7 @@ $.extend({ alert: function (message, title) {
         this.createTestDOM(TestIdx);
 
         // set current test name
-        $('#TestHeading').html(this.TestConfig.Testsets[TestIdx].Name + " (" + (this.TestState.CurrentTest+1) + " of " + this.TestState.TestSequence.length + ")");
+        $('#TestHeading').html(" Models created with the TIMIT dataset, using SP MFCC.");
         $('#TestHeading').show();
 
         // hide everything instead of load animation
@@ -1263,73 +1263,148 @@ AorB.prototype.createTestDOM = function (TestIdx) {
         var row = new Array();
         var cell = new Array();
 
-  
-        // create random file mapping if not yet done
-        if (!this.TestState.FileMappings[TestIdx]) {
-           this.TestState.FileMappings[TestIdx] = {"X": ""};
-           this.TestState.FileMappings[TestIdx] = {"N": ""};
-           var RandFileNumber = Math.random();
-           if (RandFileNumber>0.5) {
-               this.TestState.FileMappings[TestIdx].X = "A";
-               this.TestState.FileMappings[TestIdx].N = "B";
-            } else {
-               this.TestState.FileMappings[TestIdx].X = "B";
-               this.TestState.FileMappings[TestIdx].N = "A";
-            }                
-        }   
-            
+ 
+
         // add reference
-        fileID = this.TestState.FileMappings[TestIdx].X;
+        var i = 1;
+
+        ///  Title Row  ///
+        ///             ///
         row  = tab.insertRow(-1);
         cell[0] = row.insertCell(-1);
-        cell[0].innerHTML = '<button id="play'+fileID+'Btn" class="playButton" rel="'+fileID+'">A</button>';
+        cell[0].innerHTML = "Voice Targets";
+
+
+        /// Another Row ///
+        ///             ///
+        row[i]  = tab.insertRow(-1);
+        fileID = "EM"
+        cell[0] = row[i].insertCell(-1);
+        cell[0].innerHTML = '<button id="play'+fileID+'Btn" class="playButton" rel="'+fileID+'">Male</button>';
         this.addAudio(TestIdx, fileID, fileID);
 
-        cell[1] = row.insertCell(-1);
-        cell[1].innerHTML = "No\n preference";
 
-        this.addAudio(TestIdx, fileID, relID);
-
-        fileID = this.TestState.FileMappings[TestIdx].N;
-        cell[2] = row.insertCell(-1);
-        cell[2].innerHTML = '<button id="play'+fileID+'Btn" class="playButton" rel="'+fileID+'">B</button>';
+        fileID = "EF"
+        cell[1] = row[i].insertCell(-1);
+        cell[1].innerHTML = '<button id="play'+fileID+'Btn" class="playButton" rel="'+fileID+'">Female</button>';
         this.addAudio(TestIdx, fileID, fileID);
 
-        cell[3] = row.insertCell(-1);
+ 
+        ///  Title Row  ///
+        ///             ///
+        row[i]  = tab.insertRow(-1);
+
+        cell[0] = row[i].insertCell(-1);
+        cell[0].innerHTML = "Cross Gender Voice Conversion";
+
+        /// Another Row ///
+        ///             ///
+        row[i]  = tab.insertRow(-1);
+        fileID = "S2"
+        cell[0] = row[i].insertCell(-1);
+        cell[0].innerHTML = '<button id="play'+fileID+'Btn" class="playButton" rel="'+fileID+'">Source</button>';
+        this.addAudio(TestIdx, fileID, fileID);
+
+        cell[1] = row[i].insertCell(-1);
+        cell[1].innerHTML = "-->";
+
+
+        fileID = "C2"
+        cell[2] = row[i].insertCell(-1);
+        cell[2].innerHTML = '<button id="play'+fileID+'Btn" class="playButton" rel="'+fileID+'">Conversion</button>';
+        this.addAudio(TestIdx, fileID, fileID);
+
+        cell[3] = row[i].insertCell(-1);
         cell[3].innerHTML = "<button class='stopButton'>Stop</button>";
         
-        cell[4] = row.insertCell(-1);
-        cell[4].innerHTML = "We want to transform this sentence -->"; 
- 
-        row[1]  = tab.insertRow(-1);
-        cell[0] = row[1].insertCell(-1);
-        cell[0].innerHTML = "<input type='radio' name='ItemSelection' id='selectA'/>";
-        cell[1] = row[1].insertCell(-1);
-        cell[1].innerHTML = "<input type='radio' name='ItemSelection' id='selectN'/>";
-        cell[2] = row[1].insertCell(-1);
-        cell[2].innerHTML = "<input type='radio' name='ItemSelection' id='selectB'/>";  
-        cell[3] = row[1].insertCell(-1);
-        cell[4] = row[1].insertCell(-1);
-        cell[4].innerHTML = "As if it was singed by this voice -->";  
-        cell[5] = row.insertCell(-1);
+        cell[4] = row[i].insertCell(-1);
+        cell[4].innerHTML = "Male to Female"; 
 
-        row[2]  = tab.insertRow(-1);
-        cell[0] = row[2].insertCell(-1);
-        cell[1] = row[2].insertCell(-1); 
-        cell[2] = row[2].insertCell(-1);
-        cell[3] = row[2].insertCell(-1);
-        cell[4] = row[2].insertCell(-1);
-        cell[4].innerHTML = "Choose between A, B or No preference."
-        fileID = "S";
-        var relID  = "S";
-        cell[5].innerHTML = '<button id="play'+fileID+'Btn" class="playButton" rel="'+fileID+'">Input Voice</button>';
+        /// Another Row ///
+        ///             ///
+        i += 1
+        row[i]  = tab.insertRow(-1);
+        fileID = "S3"
+        cell[0] = row[i].insertCell(-1);
+        cell[0].innerHTML = '<button id="play'+fileID+'Btn" class="playButton" rel="'+fileID+'">Source</button>';
         this.addAudio(TestIdx, fileID, fileID);
-        cell[5] = row[1].insertCell(-1);
-        fileID = "R";
-        relID  = "R";
-        cell[5].innerHTML =  '<button id="play'+relID+'Btn" class="playButton" rel="'+relID+'">Target Voice</button>';
 
+        cell[1] = row[i].insertCell(-1);
+        cell[1].innerHTML = "-->";
+
+        fileID = "C3"
+        cell[2] = row[i].insertCell(-1);
+        cell[2].innerHTML = '<button id="play'+fileID+'Btn" class="playButton" rel="'+fileID+'">Conversion</button>';
         this.addAudio(TestIdx, fileID, fileID);
+
+        cell[3] = row[i].insertCell(-1);
+        cell[3].innerHTML = "<button class='stopButton'>Stop</button>";
+        
+        cell[4] = row[i].insertCell(-1);
+        cell[4].innerHTML = "Female to Male"; 
+
+
+        ///  Title Row  ///
+        ///             ///
+        row[i]  = tab.insertRow(-1);
+        cell[0] = row[i].insertCell(-1);
+        cell[0].innerHTML = "Cross Lingual Voice Conversion";
+        
+        /// Another Row ///
+        ///             ///
+        row[i]  = tab.insertRow(-1);
+        fileID = "S4"
+        cell[0] = row[i].insertCell(-1);
+        cell[0].innerHTML = '<button id="play'+fileID+'Btn" class="playButton" rel="'+fileID+'">Source</button>';
+        this.addAudio(TestIdx, fileID, fileID);
+
+        cell[1] = row[i].insertCell(-1);
+        cell[1].innerHTML = "-->";
+
+        fileID = "C4"
+        cell[2] = row[i].insertCell(-1);
+        cell[2].innerHTML = '<button id="play'+fileID+'Btn" class="playButton" rel="'+fileID+'">Conversion</button>';
+        this.addAudio(TestIdx, fileID, fileID);
+
+        cell[3] = row[i].insertCell(-1);
+        cell[3].innerHTML = "<button class='stopButton'>Stop</button>";
+        
+        cell[4] = row[i].insertCell(-1);
+        cell[4].innerHTML = "Male to Female"; 
+
+        /// Another Row ///
+        ///             ///
+        i += 1
+        row[i]  = tab.insertRow(-1);
+        fileID = "S5"
+        cell[0] = row[i].insertCell(-1);
+        cell[0].innerHTML = '<button id="play'+fileID+'Btn" class="playButton" rel="'+fileID+'">Source</button>';
+        this.addAudio(TestIdx, fileID, fileID);
+
+        cell[1] = row[i].insertCell(-1);
+        cell[1].innerHTML = "-->";
+
+        fileID = "C5"
+        cell[2] = row[i].insertCell(-1);
+        cell[2].innerHTML = '<button id="play'+fileID+'Btn" class="playButton" rel="'+fileID+'">Conversion</button>';
+        this.addAudio(TestIdx, fileID, fileID);
+
+        cell[3] = row[i].insertCell(-1);
+        cell[3].innerHTML = "<button class='stopButton'>Stop</button>";
+        
+        cell[4] = row[i].insertCell(-1);
+        cell[4].innerHTML = "Female to Male"; 
+
+        //fileID = "S";
+        //var relID  = "S";
+        //cell[5].innerHTML = '<button id="play'+fileID+'Btn" class="playButton" rel="'+fileID+'">Input Voice</button>';
+        //this.addAudio(TestIdx, fileID, fileID);
+        //cell[5] = row[1].insertCell(-1);
+        //fileID = "R";
+        //relID  = "R";
+        //cell[5].innerHTML =  '<button id="play'+relID+'Btn" class="playButton" rel="'+relID+'">Target Voice</button>';
+
+        //this.addAudio(TestIdx, fileID, fileID);
 
 
         // add spacing
@@ -1340,13 +1415,13 @@ AorB.prototype.createTestDOM = function (TestIdx) {
         $('#TableContainer').append(tab);   
 
         // randomly preselect one radio button
-        if (typeof this.TestState.Ratings[TestIdx] == 'undefined') {
+        //if (typeof this.TestState.Ratings[TestIdx] == 'undefined') {
             /*if (Math.random() > 0.5) {
                $("#selectB").prop("checked", true);
             } else {
                $("#selectA").prop("checked", true);
             }*/
-        }
+        //}
 }
 
 
